@@ -71,7 +71,11 @@ bool HangmanGame::guessLetter(char guess)
 {
 
     // TODO implement me.
-
+    // Create a copy of current pattern to see if the guess letter was correct or not
+    std::string orig_pattern = pattern;
+    // Loop through WordList wordsRemaining and update the pattern
+    for (unsigned i = 0; i < wordsRemaining.getSize(); ++i)
+    {}
     return false;
 }
 
