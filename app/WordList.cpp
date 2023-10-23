@@ -17,8 +17,9 @@ WordList::WordList(size_t initialCapacity)
     
 WordList::~WordList()
 {
-    // TODO implement me.
-}    
+    // Delete array to allocate memory
+    delete[] m_words;
+}
     
 void WordList::addWord(const std::string & s)
 {
