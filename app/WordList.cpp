@@ -22,7 +22,6 @@ WordList::~WordList()
     
 void WordList::addWord(const std::string & s)
 {
-    // TODO implement me.
     // Check if there is space in m_capacity. If not, double the size
     if (m_numWords >= m_capacity)
     {
@@ -48,8 +47,21 @@ void WordList::addWord(const std::string & s)
     
 bool WordList::removeWord(size_t index)
 {
-    // TODO implement me.
-    return false;
+    // Check if index is in bounds. If not, return false
+    if (index >= m_numWords)
+    {
+        return false;
+    }
+    // Remove the word from WordList at given index
+    // Use a loop that starts at index, moving each word one position to the left
+    // to replace at given index and fill the "hole" simultaneously
+    for (unsigned i = index; i < m_numWords - 1; ++i)
+    {
+        m_words[i] = m_words[i + 1];
+    }
+    // Decrement m_numWords and return true
+    m_numWords --;
+    return true;
 }
 
     
