@@ -25,6 +25,7 @@ public:
     ~WordList();
     
     // adds the given string (which is assumed to be a word) to the end of the given WordList.     
+    // If no space, resize 2x
     void addWord(const std::string & s);
     
     bool removeWord(size_t index); 

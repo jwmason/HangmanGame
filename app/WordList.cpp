@@ -34,12 +34,14 @@ bool WordList::removeWord(size_t index)
     
 std::string & WordList::wordAt(size_t index)
 {
-    // TODO implement me.
+    // Return word from WordList at index
+    return m_words[index];
 }
 
 const std::string & WordList::wordAt(size_t index) const
 {
-    // TODO implement me.
+    // Return word from WordList at index
+    return m_words[index];
 }
 
 
