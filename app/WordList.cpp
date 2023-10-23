@@ -23,6 +23,27 @@ WordList::~WordList()
 void WordList::addWord(const std::string & s)
 {
     // TODO implement me.
+    // Check if there is space in m_capacity. If not, double the size
+    if (m_numWords >= m_capacity)
+    {
+        // Double the capacity
+        size_t newCapacity = m_capacity * 2;
+        // Create a new array with the new capacity
+        std::string * newArray = new std::string[newCapacity];
+        // Loop through the old array and update the new one with every word
+        for (unsigned i = 0; i < m_numWords; ++i)
+        {
+            newArray[i] = m_words[i];
+        }
+        // Delete old array
+        delete [] m_words;
+        // Update WordList with new array and capacity
+        m_words = newArray;
+        m_capacity = newCapacity;
+    }
+    // If capacity needs to be updated or not, add new word to array
+    m_words[m_numWords] = s;
+    m_numWords ++;
 }
     
 bool WordList::removeWord(size_t index)
@@ -37,6 +58,7 @@ std::string & WordList::wordAt(size_t index)
     // Return word from WordList at index
     return m_words[index];
 }
+
 
 const std::string & WordList::wordAt(size_t index) const
 {
