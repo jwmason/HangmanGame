@@ -67,17 +67,92 @@ void HangmanGame::playGame()
 
 
 
-bool HangmanGame::guessLetter(char guess)
-{
+bool HangmanGame::guessLetter(char guess) {
+    // Create an array of WordList objects to represent different word families
+    // Set the first word of each WordList in wordFamilies to be the pattern
+    WordList* wordFamilies = new WordList[MAX_FAMILIES];
 
-    // TODO implement me.
-    // Create a copy of current pattern to see if the guess letter was correct or not
-    std::string orig_pattern = pattern;
-    // Loop through WordList wordsRemaining and update the pattern
+    // Iterate through the words in wordsRemaining
     for (unsigned i = 0; i < wordsRemaining.getSize(); ++i)
-    {}
-    return false;
+    {
+        // Get word at index
+        std::string word = wordsRemaining.wordAt(i);
+        // Initialize pattern holder for word
+        std::string famPattern = pattern;
+
+        // Loop through char in word and check if guess char is in word
+        for (unsigned j = 0; j < word.length(); ++j)
+        {
+            // Check if char is in word
+            if (word[j] == guess)
+            {
+                // If it is, update the famPattern for the word
+                famPattern[j] = guess;
+            }
+        }
+
+        // Initialize a bool value to see if word belongs to existing family
+        bool hasFam = false;
+
+        // Put word in WordList Family with matching pattern
+        // Loop through all possible families (maximum if each word is in a different family)
+        for (unsigned k = 0; k < wordsRemaining.getSize(); ++k)
+        {
+            // Check if famPattern matches any existing families
+            if (famPattern == wordFamilies[k].wordAt(0))
+            {
+                // Add word and break
+                wordFamilies[k].addWord(word);
+                hasFam = true;
+                break;
+            }
+        }
+
+        // If doesn't have a family, create a new one
+        if (!hasFam)
+        {
+            // Loop through wordFamilies to find an empty family
+            for (unsigned l = 0; l < wordsRemaining.getSize(); ++l)
+            {
+                // Check if the family is empty
+                if (wordFamilies[l].getSize() == 0)
+                {
+                    // Initilize the family with pattern and first word then break
+                    wordFamilies[l].addWord(famPattern);
+                    wordFamilies[l].addWord(word);
+                    break;
+                }
+            }
+        }
+    }
+
+    // Find the largest family and delete the rest
+    // Initialize holding variables
+    unsigned largestFamSize = 0;
+    unsigned largestFamIndex = 0;
+
+    // Loop through every family
+    for (unsigned i = 0; i < wordFamilies->getSize(); ++i)
+    {
+        // If the current family size is greater that current largest
+        if (wordFamilies[i].getSize() > largestFamSize)
+        {
+            largestFamSize = wordFamilies[i].getSize();
+            largestFamIndex = i;
+        }
+    }
+
+    // Update wordsRemaining WordList and new pattern
+    wordsRemaining = wordFamilies[largestFamIndex];
+    pattern = wordFamilies[largestFamIndex].wordAt(0);
+
+    // Delete the WordList of WordLists
+    delete [] wordFamilies;
+
+    // Returns true if player got a character, false if not
+    return pattern.find(guess) != std::string::npos;
 }
+
 
 
 const std::string & HangmanGame::getPattern()
