@@ -141,6 +141,9 @@ bool HangmanGame::guessLetter(char guess) {
         }
     }
 
+    // Delete old wordsRemaining
+    wordsRemaining.~WordList();    
+
     // Update wordsRemaining WordList and new pattern
     wordsRemaining = wordFamilies[largestFamIndex];
     pattern = wordFamilies[largestFamIndex].wordAt(0);
