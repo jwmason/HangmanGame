@@ -66,11 +66,10 @@ void HangmanGame::playGame()
 } 
 
 
-
 bool HangmanGame::guessLetter(char guess) {
     // Create an array of WordList objects to represent different word families
     // Set the first word of each WordList in wordFamilies to be the pattern
-    WordList* wordFamilies = new WordList[MAX_FAMILIES];
+    WordList* wordFamilies = new WordList[wordsRemaining.getSize()];
 
     // Iterate through the words in wordsRemaining
     for (unsigned i = 0; i < wordsRemaining.getSize(); ++i)
@@ -118,8 +117,8 @@ bool HangmanGame::guessLetter(char guess) {
                 if (wordFamilies[l].getSize() == 0)
                 {
                     // Initilize the family with pattern and first word then break
+                    wordFamilies[l].wordAt(0) = word;
                     wordFamilies[l].addWord(famPattern);
-                    wordFamilies[l].addWord(word);
                     break;
                 }
             }
@@ -152,7 +151,6 @@ bool HangmanGame::guessLetter(char guess) {
     // Returns true if player got a character, false if not
     return pattern.find(guess) != std::string::npos;
 }
-
 
 
 const std::string & HangmanGame::getPattern()
