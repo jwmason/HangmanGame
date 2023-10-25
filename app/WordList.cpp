@@ -18,7 +18,7 @@ WordList::WordList(size_t initialCapacity)
 WordList::~WordList()
 {
     // Delete array to allocate memory
-    delete [] m_words;
+    delete[] m_words;
 }
     
 void WordList::addWord(const std::string & s)
@@ -36,7 +36,7 @@ void WordList::addWord(const std::string & s)
             newArray[i] = m_words[i];
         }
         // Delete old array
-        delete [] m_words;
+        delete[] m_words;
         // Update WordList with new array and capacity
         m_words = newArray;
         m_capacity = newCapacity;

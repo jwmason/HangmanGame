@@ -141,11 +141,16 @@ bool HangmanGame::guessLetter(char guess) {
         }
     }
 
-    // Delete old wordsRemaining
-    wordsRemaining.~WordList();    
-
-    // Update wordsRemaining WordList and new pattern
-    wordsRemaining = wordFamilies[largestFamIndex];
+    // Update wordsRemaining WordList (clear first then add) and new pattern
+    // Loop in reverse order so update doesn't mess with iteration
+    for (int i = wordsRemaining.getSize() - 1; i >= 0; --i) // use int to avoid infinite loop
+    {
+        wordsRemaining.removeWord(i);
+    }
+    for (unsigned i = 0; i < wordFamilies[largestFamIndex].getSize(); ++i)
+    {
+        wordsRemaining.addWord(wordFamilies[largestFamIndex].wordAt(i));
+    }
     pattern = wordFamilies[largestFamIndex].wordAt(0);
 
     // Delete the WordList of WordLists
