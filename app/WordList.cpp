@@ -43,7 +43,7 @@ void WordList::addWord(const std::string & s)
     }
     // If capacity needs to be updated or not, add new word to array
     m_words[m_numWords] = s;
-    m_numWords ++;
+    m_numWords++;
 }
     
 bool WordList::removeWord(size_t index)

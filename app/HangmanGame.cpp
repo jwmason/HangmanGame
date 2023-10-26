@@ -117,8 +117,8 @@ bool HangmanGame::guessLetter(char guess) {
                 if (wordFamilies[l].getSize() == 0)
                 {
                     // Initilize the family with pattern and first word then break
-                    wordFamilies[l].wordAt(0) = word;
                     wordFamilies[l].addWord(famPattern);
+                    wordFamilies[l].addWord(word);
                     break;
                 }
             }
@@ -141,17 +141,22 @@ bool HangmanGame::guessLetter(char guess) {
         }
     }
 
+    // Initialize pattern
+    pattern = wordFamilies[largestFamIndex].wordAt(0);
+
     // Update wordsRemaining WordList (clear first then add) and new pattern
     // Loop in reverse order so update doesn't mess with iteration
     for (int i = wordsRemaining.getSize() - 1; i >= 0; --i) // use int to avoid infinite loop
     {
         wordsRemaining.removeWord(i);
     }
-    for (unsigned i = 0; i < wordFamilies[largestFamIndex].getSize(); ++i)
+
+    // Loop to make wordsRemaining = largest family
+    // Start at 1 to ignore pattern value
+    for (unsigned i = 1; i < wordFamilies[largestFamIndex].getSize(); ++i)
     {
         wordsRemaining.addWord(wordFamilies[largestFamIndex].wordAt(i));
     }
-    pattern = wordFamilies[largestFamIndex].wordAt(0);
 
     // Delete the WordList of WordLists
     delete [] wordFamilies;
